@@ -11,7 +11,7 @@ end
 
 local function set_join_options(event)    
     apply_settings()
-
+    -- testing comment
     -- an earlier version of this mod set these two settings, and causes major game lag if 1000. Ajust them to something acceptable
     if game.players[event.player_index].force_item_pickup_distance_bonus > 10 then
         game.players[event.player_index].force_item_pickup_distance_bonus = 1
