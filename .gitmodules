@@ -1,3 +1,6 @@
 [submodule "themightygugi_longreach"]
 	path = themightygugi_longreach
 	url = https://github.com/kasceus/themightygugi_longreach
+[submodule "FactorioModPackager/themightygugi_longreach"]
+	path = FactorioModPackager/themightygugi_longreach
+	url = https://github.com/kasceus/themightygugi_longreach

@@ -7,13 +7,4 @@
       <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="themightygugi_longreach\" />
-  </ItemGroup>
-    <ItemGroup>
-        <None Include="themightygugi_longreach\**\*">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
 </Project>
