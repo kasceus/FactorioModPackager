@@ -9,9 +9,10 @@ internal class Program
     static void Main(string[] args)
     {
 
-        string modName = "themightygugi_longreach";
+        string modName = "longreach";
+        string folderName = modName;
         string modVersion = "0.0.0"; // Default version, will be updated from info.json
-        string modDirectory = Path.Combine(Directory.GetCurrentDirectory(), modName);
+        string modDirectory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
         string infoJsonPath = Path.Combine(modDirectory, "info.json");
         string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         string modPath = Path.Combine(userDirectory, "AppData", "Roaming", "Factorio", "mods");
@@ -24,12 +25,17 @@ internal class Program
             {
                 modVersion = versionElement.GetString() ?? modVersion;
             }
+            if (infoJson.RootElement.TryGetProperty(modVersion, out var nameElement))
+            {
+                modName = nameElement.GetString() ?? modName;
+            }
+
         }
         else
         {
             Console.WriteLine($"info.json not found in {modDirectory}. Using default version {modVersion}.");
         }
-        string zipFileName = $"{modName}_forked_{modVersion}.zip";
+        string zipFileName = $"{modName}_{modVersion}.zip";
 
         string zipFilePath = Path.Combine(Directory.GetCurrentDirectory(), zipFileName);
         if (File.Exists(zipFilePath))
