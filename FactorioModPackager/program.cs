@@ -9,7 +9,7 @@ internal class Program
     static void Main(string[] args)
     {
 
-        string modName = "longreach";
+        string modName = "themightygugi_longreach";
         string folderName = modName;
         string modVersion = "0.0.0"; // Default version, will be updated from info.json
         string modDirectory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -42,17 +42,35 @@ internal class Program
         {
             File.Delete(zipFilePath);
         }
+        string outterFolder = zipFilePath.Replace(".zip", "");
+        Directory.CreateDirectory(outterFolder);
+        string innerInnerFolderPath = Path.Combine(outterFolder, zipFileName.Split(".zip")[0]);
 
-        // Create the zip file
-        using (ZipArchive zip = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+        Directory.CreateDirectory(innerInnerFolderPath);
+
+
+        string[] ignored = [".git", ".vs", ".gitignore"];
+
+        foreach (string file in Directory.GetFiles(modDirectory, "*", SearchOption.AllDirectories))
         {
-            // Add the mod directory to the zip file
-            foreach (string file in Directory.GetFiles(modDirectory, "*", SearchOption.AllDirectories))
+            if (ignored.Any(ignoredFolder => file.Contains(ignoredFolder)))
             {
-                string entryName = Path.GetRelativePath(modDirectory, file);
-                zip.CreateEntryFromFile(file, entryName);
+                continue; // Skip ignored folders
             }
+            string entryName = Path.GetRelativePath(modDirectory, file);
+            //copy the files from this directory into the inner directory
+            string destinationPath = Path.Combine(innerInnerFolderPath, entryName);
+            if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+            }
+
+            File.Copy(file, destinationPath, true);
         }
+
+        // Create the zip file - should be structured like this: modName_version.zip/modName_version/*files*
+        ZipFile.CreateFromDirectory(outterFolder, zipFilePath);
+
         string modFile = Path.Combine(modPath, $"{modName}_forked_{modVersion}.zip");
         if (File.Exists(modFile))
         {

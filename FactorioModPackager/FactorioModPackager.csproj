@@ -6,5 +6,13 @@
     <Nullable>enable</Nullable>
       <OutputType>Exe</OutputType>
   </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="themightygugi_longreach"/>
+        <Folder Include="themightygugi_longreach/locale"/>
+        <Content Include="themightygugi_longreach\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
+        </ItemGroup>
 
 </Project>
